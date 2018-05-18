@@ -1,13 +1,11 @@
-import './firebase'
 import Vue from 'vue'
 import Vuex from 'vuex'
 import VueFire from 'vuefire'
 import firebase from 'firebase'
 import router from './router'
-
+import {db} from './firebase'
 Vue.use(VueFire)
 Vue.use(Vuex)
-
 export default new Vuex.Store({
   state: {
     roomsList: [],
@@ -57,15 +55,22 @@ export default new Vuex.Store({
       for (let i = 0; i < state.boards.length; i++) {
         if (id === i) {
           state.boards[i].show = 'success'
+          db.ref('/Rooms/' + localStorage.getItem('token') + `/Board/Board${id}`).update({
+            show: 'success',
+            status: 'locked'
+          })
         }
       }
-
       let pattern = state.patternUse.pola.split(',')
       for (let p = 0; p < pattern.length; p++) {
         if (id === Number(pattern[p]) - 1) {
           let indexPattern = Number(pattern[p]) - 1
           console.log('=======BOMB========', pattern[p])
           state.boards[indexPattern].show = 'bomb'
+          db.ref('/Rooms/' + localStorage.getItem('token') + `/Board/Board${id}`).update({
+            show: 'bomb',
+            status: 'locked'
+          })
         }
       }
     }

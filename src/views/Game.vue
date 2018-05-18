@@ -17,8 +17,13 @@
                 </div>
                 <div class="col-md-6 col-sm-12">
                   <div class="row">
-                    <div class="col-md-12" v-for="( player, index ) in listPlayer" :key="index">
-                      <h3 class="headingplayer">{{player.name}} <span v-if="player1.turn" :class="{active: player1.turn}">active</span></h3>
+                    <div class="col-md-12">
+                      <h3 class="headingplayer">{{player1.name}} <span v-if="player1.turn" :class="{active: player1.turn}">active</span></h3>
+                      <div class="mainplayer">
+                      </div>
+                    </div>
+                    <div class="col-md-12">
+                      <h3 class="headingplayer">{{player2.name}} <span v-if="player1.turn" :class="{active: player1.turn}">active</span></h3>
                       <div class="mainplayer">
                       </div>
                     </div>
@@ -40,7 +45,8 @@ export default {
     return {
       lockButton: [],
       currentClick: '',
-      listPlayer: []
+      player1: '',
+      player2: ''
     }
   },
   computed: {
@@ -64,15 +70,14 @@ export default {
       }
     }
   },
-  mounted () {
-    db.ref('/Players').on('value', (snapshot) => {
-      snapshot.forEach(snap => {
-        let playerData = {
-          name: snap.val().username,
-          key: snap.key
-        }
-        this.listPlayer.push(playerData)
-      })
+  created () {
+    db.ref('/Rooms/' + localStorage.getItem('token') + '/Player1').on('value', (snapshot) => {
+      this.player1 = snapshot.val()
+      console.log(this.player1)
+    })
+    db.ref('/Rooms/' + localStorage.getItem('token') + '/Player2').on('value', (snapshot) => {
+      this.player2 = snapshot.val()
+      console.log(this.player2)
     })
   }
 }

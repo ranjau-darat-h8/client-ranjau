@@ -1,8 +1,9 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from './views/Home.vue'
-import Dashboard from './views/Dashboard.vue'
-import SignUp from './views/SignUp.vue'
+import About from './views/About.vue'
+import Room from './views/Room.vue'
+import Game from './views/Game.vue'
 
 Vue.use(Router)
 
@@ -14,9 +15,19 @@ export default new Router({
       component: Home
     },
     {
-      path: '/dasboard',
-      name: 'dasboard',
-      component: Dashboard
+      path: '/about',
+      name: 'about',
+      component: About
+    },
+    {
+      path: '/room',
+      name: 'room',
+      component: Room
+    },
+    {
+      path: '/game',
+      name: 'game',
+      component: Game
     }
   ]
 })

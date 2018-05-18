@@ -1,12 +1,14 @@
-import Firebase from 'firebase'
+import firebase from 'firebase'
 
-const app = Firebase.initializeApp({
-  apiKey: 'AIzaSyCoZ95iqYKim2gcujngCS8Q2oEnM6_QL8o',
-  authDomain: 'ranjau-darat.firebaseapp.com',
-  databaseURL: 'https://ranjau-darat.firebaseio.com',
-  projectId: 'ranjau-darat',
-  storageBucket: 'ranjau-darat.appspot.com',
-  messagingSenderId: '1078988882595'
-})
+// Initialize Firebase
+const config = {
+  apiKey: 'AIzaSyBZ-64EswY1gBOyltTrIJxijJ7XMm7SrBc',
+  authDomain: 'ranjaudarat-965a6.firebaseapp.com',
+  databaseURL: 'https://ranjaudarat-965a6.firebaseio.com',
+  projectId: 'ranjaudarat-965a6',
+  storageBucket: 'ranjaudarat-965a6.appspot.com',
+  messagingSenderId: '807012497746'
+}
+const firebaseApp = firebase.initializeApp(config)
 
-export const db = app.database()
+export const db = firebaseApp.database()

@@ -140,6 +140,7 @@ export default new Vuex.Store({
       // console.log('ini room', room.key)
       let token = room.key
       localStorage.setItem('token', token)
+      localStorage.setItem('player', 'player1')
       alertify.success(`You have succesfully create room`)
       alertify.success(`You'll be redirected to the room in a few seconds`)
       setTimeout(function () { router.push('room') }, 3000)
@@ -166,6 +167,7 @@ export default new Vuex.Store({
         }
         room.update(obj)
       })
+      localStorage.setItem('player', 'player2')
       alertify.success(`You have succesfully join the room`)
       alertify.success(`You'll be redirected to the room in a few seconds`)
       setTimeout(function () { router.push('room') }, 3000)

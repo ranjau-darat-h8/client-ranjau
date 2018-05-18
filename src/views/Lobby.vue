@@ -37,14 +37,14 @@
             <form>
               <div class="form-group">
                 <label for="exampleInputEmail1">Room Token</label>
-                <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter token">
+                <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter token" v-model="input">
                 <small id="token" class="form-text text-muted">Psst, if you haven't got the token, please ask your friend..</small>
               </div>
             </form>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-            <button type="button" class="btn btn-primary">Join Room :D</button>
+            <button type="button" class="btn btn-primary" data-dismiss="modal" @click="joinRoom">Join Room :D</button>
           </div>
         </div>
       </div>
@@ -58,17 +58,25 @@ import {mapState} from 'vuex'
 
 export default {
   name: 'Room',
+  data () {
+    return {
+      input: ''
+    }
+  },
   props: {
   },
   created () {
-    this.$store.dispatch('getRooms')
+    // this.$store.dispatch('getRooms')
   },
   methods: {
     createRoom () {
       // console.log('masuk room vue')
       this.$store.dispatch('createRoom')
-      alertify.success(`You have succesfully create room`)
-      alertify.success(`You'll be redirected to the room in a few seconds`)
+    },
+    joinRoom () {
+      localStorage.setItem('token', this.input)
+      this.input = ''
+      this.$store.dispatch('joinRoom')
     }
   },
   computed: {

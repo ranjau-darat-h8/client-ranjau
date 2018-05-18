@@ -17,16 +17,9 @@
                 </div>
                 <div class="col-md-6 col-sm-12">
                   <div class="row">
-                    <div class="col-md-12">
-                      <h3 class="headingplayer">Player 1 <span v-if="player1.turn" :class="{active: player1.turn}">active</span></h3>
+                    <div class="col-md-12" v-for="( player, index ) in listPlayer" :key="index">
+                      <h3 class="headingplayer">{{player.name}} <span v-if="player1.turn" :class="{active: player1.turn}">active</span></h3>
                       <div class="mainplayer">
-
-                      </div>
-                    </div>
-                    <div class="col-md-12">
-                      <h3 class="headingplayer">Player 2 <span v-if="player2.turn" :class="{active: player2.turn}">( non-active )</span></h3>
-                      <div class="mainplayer">
-                        <div></div>
                       </div>
                     </div>
                   </div>
@@ -38,6 +31,7 @@
 </template>
 
 <script>
+import {db} from '../firebase'
 import { mapState } from 'vuex'
 const $ = window.$
 
@@ -45,7 +39,8 @@ export default {
   data () {
     return {
       lockButton: [],
-      currentClick: ''
+      currentClick: '',
+      listPlayer: []
     }
   },
   computed: {
@@ -68,6 +63,17 @@ export default {
         }
       }
     }
+  },
+  mounted () {
+    db.ref('/Players').on('value', (snapshot) => {
+      snapshot.forEach(snap => {
+        let playerData = {
+          name: snap.val().username,
+          key: snap.key
+        }
+        this.listPlayer.push(playerData)
+      })
+    })
   }
 }
 </script>

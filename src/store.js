@@ -9,7 +9,36 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    roomsList: []
+    roomsList: [],
+    pattern: [
+      { pola: '1,7,9' },
+      { pola: '2,5,7' },
+      { pola: '3,7,8' },
+      { pola: '1,2,8' },
+      { pola: '3,4,9' }
+    ],
+    boards: [
+      { show: 'blank', status: 'play' },
+      { show: 'blank', status: 'play' },
+      { show: 'blank', status: 'play' },
+      { show: 'blank', status: 'play' },
+      { show: 'blank', status: 'play' },
+      { show: 'blank', status: 'play' },
+      { show: 'blank', status: 'play' },
+      { show: 'blank', status: 'play' },
+      { show: 'blank', status: 'play' }
+    ],
+    lockButton: [],
+    player1: {
+      turn: true,
+      point: '',
+      boards: []
+    },
+    player2: {
+      turn: false,
+      point: '',
+      boards: []
+    }
   },
   mutations: {
     getRooms (state, payload) {

@@ -22,13 +22,13 @@
                 <div class="col-md-6 col-sm-12">
                   <div class="row">
                     <div class="col-md-12">
-                      <h3 class="headingplayer">{{player1.name}} <span v-if="player1.turn" :class="{active: player1.turn}">active</span></h3>
+                      <h3 class="headingplayer">{{player1.name}} <span v-if="player1.turn" :class="{active: player1Status}">active</span></h3>
                       <div class="mainplayer">
                         {{pointPlayer1}}
                       </div>
                     </div>
                     <div class="col-md-12">
-                      <h3 class="headingplayer">{{player2.name}} <span v-if="player2.turn" :class="{active: player2.turn}">active</span></h3>
+                      <h3 class="headingplayer">{{player2.name}} <span v-if="player2.turn" :class="{active: player2Status}">active</span></h3>
                       <div class="mainplayer">
                         {{pointPlayer2}}
                       </div>
@@ -53,8 +53,6 @@ export default {
     return {
       lockButton: [],
       currentClick: '',
-      player1: '',
-      player2: '',
       localstorage: ''
     }
   },
@@ -65,7 +63,9 @@ export default {
       'player1Status',
       'player2Status',
       'pointPlayer1',
-      'pointPlayer2'
+      'pointPlayer2',
+      'player1',
+      'player2'
     ])
   },
   methods: {
@@ -92,14 +92,14 @@ export default {
   },
   created () {
     db.ref('/Rooms/' + localStorage.getItem('token') + '/Player1').on('value', (snapshot) => {
-      this.player1 = snapshot.val()
+      this.$store.state.player1 = snapshot.val()
       this.$store.state.player1Status = snapshot.val().turn
       this.localstorage = localStorage.getItem('player')
       console.log(this.player1)
       console.log("===========ini status player 1",this.$store.state.player1Status)
     })
     db.ref('/Rooms/' + localStorage.getItem('token') + '/Player2').on('value', (snapshot) => {
-      this.player2 = snapshot.val()
+      this.$store.state.player2 = snapshot.val()
       this.$store.state.player2Status = snapshot.val().turn
       this.localstorage = localStorage.getItem('player')
       console.log(this.player2)

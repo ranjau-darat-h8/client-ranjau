@@ -30,7 +30,7 @@ export default {
     login: function() {
       firebase.database().ref('Players/').on('value', (snapshot) => {
         snapshot.forEach(user => {
-          localStorage.setItem('username', user.val().username)
+          localStorage.setItem('username', this.username)
         })
       })
 
@@ -44,6 +44,7 @@ export default {
             alert('Oop. ' + err.message)
           })
       this.count++
+      this.$router.push('lobby')
     }
   }
 }

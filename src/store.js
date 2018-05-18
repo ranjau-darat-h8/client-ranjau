@@ -138,7 +138,7 @@ export default new Vuex.Store({
       localStorage.setItem('player', 'player1')
       alertify.success(`You have succesfully create room`)
       alertify.success(`You'll be redirected to the room in a few seconds`)
-      setTimeout(function () { router.push('room') }, 3000)
+      setTimeout(function () { router.push('game') }, 3000)
     },
     getRoom ({commit}) {
       let token = localStorage.getItem('token')
@@ -165,7 +165,7 @@ export default new Vuex.Store({
       localStorage.setItem('player', 'player2')
       alertify.success(`You have succesfully join the room`)
       alertify.success(`You'll be redirected to the room in a few seconds`)
-      setTimeout(function () { router.push('room') }, 3000)
+      setTimeout(function () { router.push('game') }, 3000)
     }
   }
 })

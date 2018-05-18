@@ -9,6 +9,10 @@ Vue.use(VueFire)
 Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
+    pointPlayer1: [],
+    pointPlayer2: [],
+    player1Status: '',
+    player2Status: '',
     roomsList: [],
     token: '',
     pattern: [
@@ -18,7 +22,7 @@ export default new Vuex.Store({
       { pola: '1,2,8' },
       { pola: '3,4,9' }
     ],
-    patternUse: { pola: '2,5,7' },
+    patternUse: { pola: '5,7' },
     boards: [
       { show: 'blank', status: 'play' },
       { show: 'blank', status: 'play' },
@@ -54,7 +58,26 @@ export default new Vuex.Store({
       let token = localStorage.getItem('token')
       state.token = token
     },
-    updateButtonMutation (state, id) {
+    updateButtonMutation (state, id, statusPlayer) {
+      console.log('player 1 status', state.player1Status)
+      console.log('player 2 status', state.player2Status)
+      if (state.player1Status) {
+        db.ref('/Rooms/' + localStorage.getItem('token') + `/Player1`).update({
+          turn: false
+        })
+        db.ref('/Rooms/' + localStorage.getItem('token') + `/Player2`).update({
+          turn: true
+        })
+        state.pointPlayer1.push(1)
+      } else if (state.player2Status) {
+        db.ref('/Rooms/' + localStorage.getItem('token') + `/Player2`).update({
+          turn: false
+        })
+        db.ref('/Rooms/' + localStorage.getItem('token') + `/Player1`).update({
+          turn: true
+        })
+        state.pointPlayer2.push(1)
+      }
       console.log('masuk mutaion')
       for (let i = 0; i < state.boards.length; i++) {
         if (id === i) {
@@ -75,6 +98,11 @@ export default new Vuex.Store({
             show: 'bomb',
             status: 'locked'
           })
+          if (!state.player1Status) {
+            state.pointPlayer1.pop()
+          } else if (!state.player2Status) {
+            state.pointPlayer2.pop()
+          }
         }
       }
     }

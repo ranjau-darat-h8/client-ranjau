@@ -44,24 +44,6 @@ const $ = window.$
 export default {
   data () {
     return {
-      // pattern: [
-      //   { pola: '1,7,9' },
-      //   { pola: '2,5,7' },
-      //   { pola: '3,7,8' },
-      //   { pola: '1,2,8' },
-      //   { pola: '3,4,9' }
-      // ],
-      // boards: [
-      //   { show: 'blank', status: 'play' },
-      //   { show: 'blank', status: 'play' },
-      //   { show: 'blank', status: 'play' },
-      //   { show: 'blank', status: 'play' },
-      //   { show: 'blank', status: 'play' },
-      //   { show: 'blank', status: 'play' },
-      //   { show: 'blank', status: 'play' },
-      //   { show: 'blank', status: 'play' },
-      //   { show: 'blank', status: 'play' }
-      // ],
       lockButton: [],
       currentClick: ''
     }
@@ -82,6 +64,7 @@ export default {
         if (i === j) {
           $(`.btns${i}`).prop('disabled', true)
           this.boards[j].status = 'lock'
+          this.$store.commit('updateButtonMutation', j)
         }
       }
     }

@@ -165,6 +165,12 @@ export default new Vuex.Store({
           point: 0,
           ready: false,
           turn: true
+        },
+        Player2: {
+          name: 'Bambang',
+          point: 0,
+          ready: false,
+          turn: false
         }
       })
       // console.log('ini room', room.key)

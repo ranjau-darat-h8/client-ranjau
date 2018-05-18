@@ -16,56 +16,63 @@
                     </div>
                 </div>
                 <div class="col-md-6 col-sm-12">
-                    <!-- <div style="width:100%; height: 400px; background: green;"> -->
-                      <h3>Terklik :)</h3>
-                      <p style="font-size: 50px;">{{ lockButton }}</p>
-                    <!-- </div> -->
+                  <div class="row">
+                    <div class="col-md-12">
+                      <h3 class="headingplayer">Player 1 <span v-if="player1.turn" :class="{active: player1.turn}">active</span></h3>
+                      <div class="mainplayer">
+
+                      </div>
+                    </div>
+                    <div class="col-md-12">
+                      <h3 class="headingplayer">Player 2 <span v-if="player2.turn" :class="{active: player2.turn}">( non-active )</span></h3>
+                      <div class="mainplayer">
+                        <div></div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
+                {{ pattern }}
             </div>
         </div>
     </div>
 </template>
 
 <script>
+import { mapState } from 'vuex'
 const $ = window.$
 
 export default {
   data () {
     return {
-      pattern: [
-        { pola: '1,7,9' },
-        { pola: '2,5,7' },
-        { pola: '3,7,8' },
-        { pola: '1,2,8' },
-        { pola: '3,4,9' }
-      ],
-      boards: [
-        //   { show: 'blank', status: 'play' },
-        //   { show: 'bomb', status: 'lock' },
-        //   { show: 'success', status: 'lock' },
-        //   { show: 'success', status: 'lock' },
-        //   { show: 'blank', status: 'play' },
-        //   { show: 'success', status: 'lock' },
-        //   { show: 'bomb', status: 'lock' },
-        //   { show: 'success', status: 'lock' },
-        //   { show: 'blank', status: 'play' }
-
-        { show: 'blank', status: 'play' },
-        { show: 'blank', status: 'play' },
-        { show: 'blank', status: 'play' },
-        { show: 'blank', status: 'play' },
-        { show: 'blank', status: 'play' },
-        { show: 'blank', status: 'play' },
-        { show: 'blank', status: 'play' },
-        { show: 'blank', status: 'play' },
-        { show: 'blank', status: 'play' }
-      ],
+      // pattern: [
+      //   { pola: '1,7,9' },
+      //   { pola: '2,5,7' },
+      //   { pola: '3,7,8' },
+      //   { pola: '1,2,8' },
+      //   { pola: '3,4,9' }
+      // ],
+      // boards: [
+      //   { show: 'blank', status: 'play' },
+      //   { show: 'blank', status: 'play' },
+      //   { show: 'blank', status: 'play' },
+      //   { show: 'blank', status: 'play' },
+      //   { show: 'blank', status: 'play' },
+      //   { show: 'blank', status: 'play' },
+      //   { show: 'blank', status: 'play' },
+      //   { show: 'blank', status: 'play' },
+      //   { show: 'blank', status: 'play' }
+      // ],
       lockButton: [],
       currentClick: ''
     }
   },
-  computed () {
-
+  computed: {
+    ...mapState([
+      'boards',
+      'pattern',
+      'player1',
+      'player2'
+    ])
   },
   methods: {
     chooseButton (button, i) {
@@ -119,5 +126,21 @@ button {
 :disabled {
     background: grey;
     color: #bcb7b7;
+}
+.mainplayer {
+  width: 100%;
+  height: 100px;
+  background: red;
+}
+.headingplayer {
+  font-size: 25px;
+  text-align: left;
+}
+.active {
+  font-size: 18px;
+  padding: 5px;
+  border-radius: 5px;
+  color: white;
+  background: green;
 }
 </style>

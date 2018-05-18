@@ -23,7 +23,17 @@ export default new Vuex.Store({
       { show: 'blank', status: 'play' },
       { show: 'blank', status: 'play' }
     ],
-    lockButton: []
+    lockButton: [],
+    player1: {
+      turn: true,
+      point: '',
+      boards: []
+    },
+    player2: {
+      turn: false,
+      point: '',
+      boards: []
+    }
   },
   mutations: {
 

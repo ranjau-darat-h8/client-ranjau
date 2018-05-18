@@ -12,8 +12,39 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     roomsList: [],
-    room: '',
-    token: ''
+    token: '',
+    pattern: [
+      { pola: '1,7,9' },
+      { pola: '2,5,7' },
+      { pola: '3,7,8' },
+      { pola: '1,2,8' },
+      { pola: '3,4,9' }
+    ],
+    patternUse: { pola: '2,5,7' },
+    boards: [
+      { show: 'blank', status: 'play' },
+      { show: 'blank', status: 'play' },
+      { show: 'blank', status: 'play' },
+      { show: 'blank', status: 'play' },
+      { show: 'blank', status: 'play' },
+      { show: 'blank', status: 'play' },
+      { show: 'blank', status: 'play' },
+      { show: 'blank', status: 'play' },
+      { show: 'blank', status: 'play' }
+    ],
+    lockButton: [],
+    player1: {
+      turn: true,
+      point: '',
+      ready: false,
+      boards: []
+    },
+    player2: {
+      turn: false,
+      point: false,
+      boards: []
+    },
+    room: ''
   },
   mutations: {
     getRooms (state, payload) {
@@ -24,6 +55,23 @@ export default new Vuex.Store({
       console.log('after', state.room)
       let token = localStorage.getItem('token')
       state.token = token
+    },
+    updateButtonMutation (state, id) {
+      console.log('masuk mutaion')
+      for (let i = 0; i < state.boards.length; i++) {
+        if (id === i) {
+          state.boards[i].show = 'success'
+        }
+      }
+
+      let pattern = state.patternUse.pola.split(',')
+      for (let p = 0; p < pattern.length; p++) {
+        if (id === Number(pattern[p]) - 1) {
+          let indexPattern = Number(pattern[p]) - 1
+          console.log('=======BOMB========', pattern[p])
+          state.boards[indexPattern].show = 'bomb'
+        }
+      }
     }
   },
   actions: {

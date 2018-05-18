@@ -4,6 +4,7 @@ import Home from './views/Home.vue'
 import About from './views/About.vue'
 import Room from './views/Room.vue'
 import Lobby from './views/Lobby.vue'
+import Game from './views/Game.vue'
 
 Vue.use(Router)
 
@@ -28,6 +29,11 @@ export default new Router({
       path: '/lobby',
       name: 'lobby',
       component: Lobby
+    },
+    {
+      path: '/game',
+      name: 'game',
+      component: Game
     }
   ]
 })

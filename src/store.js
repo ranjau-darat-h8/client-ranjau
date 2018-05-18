@@ -4,6 +4,7 @@ import Vuex from 'vuex'
 import VueFire from 'vuefire'
 import firebase from 'firebase'
 import router from './router'
+import alertify from 'alertifyjs'
 
 Vue.use(VueFire)
 Vue.use(Vuex)
@@ -11,6 +12,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     roomsList: [],
+    token: '',
     pattern: [
       { pola: '1,7,9' },
       { pola: '2,5,7' },
@@ -51,6 +53,8 @@ export default new Vuex.Store({
     getRoom (state, payload) {
       state.room = payload
       console.log('after', state.room)
+      let token = localStorage.getItem('token')
+      state.token = token
     },
     updateButtonMutation (state, id) {
       console.log('masuk mutaion')
@@ -131,6 +135,8 @@ export default new Vuex.Store({
       // console.log('ini room', room.key)
       let token = room.key
       localStorage.setItem('token', token)
+      alertify.success(`You have succesfully create room`)
+      alertify.success(`You'll be redirected to the room in a few seconds`)
       setTimeout(function () { router.push('room') }, 3000)
     },
     getRoom ({commit}) {
@@ -140,6 +146,24 @@ export default new Vuex.Store({
         console.log(room)
         commit('getRoom', room)
       })
+    },
+    joinRoom ({commit}) {
+      // console.log('masuk actions')
+      let token = localStorage.getItem('token')
+      let username = localStorage.getItem('username')
+      let room = firebase.database().ref('Rooms/' + token).child('Player2')
+      room.on('value', function (snapshot) {
+        let obj = {
+          name: username,
+          point: 0,
+          ready: false,
+          turn: false
+        }
+        room.update(obj)
+      })
+      alertify.success(`You have succesfully join the room`)
+      alertify.success(`You'll be redirected to the room in a few seconds`)
+      setTimeout(function () { router.push('room') }, 3000)
     }
   }
 })
